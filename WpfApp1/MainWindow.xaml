@@ -1,0 +1,56 @@
+﻿<Window x:Class="Names.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Names"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="62*" />
+            <RowDefinition Height="15*" />
+            <RowDefinition Height="8*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+       
+
+       
+        <Menu Grid.Row="0">
+           
+            <MenuItem Header="_File">
+                
+                <MenuItem Header="_New"/>
+
+               
+                <MenuItem Header="_Load"/>
+
+                
+                <Separator/>
+
+               
+                <MenuItem Header="_Save"/>
+            </MenuItem>
+            <MenuItem Header="_Help"/>
+
+            
+
+        </Menu>
+        <TextBox HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <Label Content="Number of elements:" HorizontalAlignment="Left" Margin="53,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Margin="405,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <Label Content="Range from:" HorizontalAlignment="Left" Margin="325,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <TextBox HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="1" Margin="21,0,0,0"/>
+        <Label Content="Range to:" HorizontalAlignment="Left" Margin="540,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
+        <Button Grid.Column="1" Content="Start" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="45" Width="180"/>
+        <ProgressBar HorizontalAlignment="Center" Height="45" Grid.Row="3" VerticalAlignment="Center" Width="580"/>
+        <StatusBar Grid.Row="4"/>
+
+    </Grid>
+</Window>
