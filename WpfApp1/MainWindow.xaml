@@ -44,17 +44,18 @@
         </Menu>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="180,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
         <Label Content="Number of elements:" HorizontalAlignment="Left" Margin="53,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-        <TextBox HorizontalAlignment="Left" Margin="405,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
+        <TextBox x:Name="textBoxRangeFrom" HorizontalAlignment="Left" Margin="405,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
         <Label Content="Range from:" HorizontalAlignment="Left" Margin="325,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-        <TextBox HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="1" Margin="21,0,0,0"/>
+        <TextBox x:Name="textBoxRangeTo" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" Grid.Column="1" Margin="21,0,0,0"/>
         <Label Content="Range to:" HorizontalAlignment="Left" Margin="540,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
-        <Button Grid.Column="1" Content="Start" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="45" Width="180"/>
-        <ProgressBar HorizontalAlignment="Center" Height="45" Grid.Row="3" VerticalAlignment="Center" Width="580"/>
+        <Button x:Name="StartButton" Grid.Column="1" Content="Start" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="45" Width="180" Click ="StartButton_Click" />
+        <ProgressBar x:Name="ProgrssBarApp" HorizontalAlignment="Center" Height="45" Grid.Row="3" VerticalAlignment="Center" Width="580"/>
         <StatusBar Grid.Row="4">
             <StatusBarItem>
                 <TextBlock x:Name="TxtBlock"/>
             </StatusBarItem>
         </StatusBar>
+        <TextBlock HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" Text="Wygenerowane liczby:" VerticalAlignment="Center" Width="580" Height="249" x:Name="TxtOutputBlock"/>
 
 
 
