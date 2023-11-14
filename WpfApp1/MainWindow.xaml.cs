@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace WpfApp1
 {
     /// <summary>
@@ -23,11 +24,13 @@ namespace WpfApp1
         public MainWindow()
         {
             InitializeComponent();
+            SetStatus("Ready");
         }
 
-        private void InitializeComponent()
+        private void SetStatus(string message)
         {
-            
+            TxtBlock.Text = message;
         }
+
     }
 }
