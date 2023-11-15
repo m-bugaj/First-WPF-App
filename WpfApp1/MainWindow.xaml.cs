@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 
 namespace WpfApp1
@@ -22,6 +23,9 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool fileSaved = false;
+        private string savedFilePath = string.Empty;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -51,10 +55,9 @@ namespace WpfApp1
                 List<int> generatedNumbers = await generator.GenerateAsync(count, minValue, maxValue, progress);
 
                 Console.WriteLine("Wygenerowane liczby:");
-                foreach (int number in generatedNumbers)
-                {
-                    TxtOutputBlock.Text = "Wygenerowane liczby:\n" + string.Join(", ", generatedNumbers);   
-                }
+                
+                TxtOutputBlock.Text = "Wygenerowane liczby:\n" + string.Join(", ", generatedNumbers);   
+                
             }
             else
             {
@@ -62,9 +65,65 @@ namespace WpfApp1
             }
         }
 
+        private void LoadItem_Click(object sender, RoutedEventArgs e)
+        {
+            TextFileHandling textFile = new TextFileHandling();
+
+            string? path = textFile.GetFilePath();
+            List<string>? text = new List<string>();
+            if (path != null)
+            {
+                text = textFile.ReadTextFile(path);
+            }
+
+            if (text != null)
+            {
+                TxtOutputBlock.Text = "";
+                foreach (string line in text)
+                {
+                    TxtOutputBlock.Text += line + Environment.NewLine;
+                }
+            }
+        }
+
+        private void SaveItem_Click(object sender, RoutedEventArgs e)
+        {
+            TextFileHandling textFile = new TextFileHandling();
+            if (!fileSaved)
+            {
+                string? path = textFile.SaveFilePath();
+                if (path == null)
+                {
+                    return;
+                }
+
+                List<string> text = new List<string>(TxtOutputBlock.Text.Split(Environment.NewLine));
+
+                textFile.WriteTextFile(path, text);
+                fileSaved = true;
+                savedFilePath = path;
+
+                MessageBox.Show("Plik został zapisany.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(savedFilePath))
+                {
+                    List<string> text = new List<string>(TxtOutputBlock.Text.Split(Environment.NewLine));
+
+                    textFile.WriteTextFile(savedFilePath, text);
+
+                    MessageBox.Show("Plik został nadpisany.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Błąd: Ścieżka do pliku nie została ustawiona.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+
+
+        }
     }
-    
-    
 
     public class RandomNumberGenerator
     {
@@ -88,5 +147,92 @@ namespace WpfApp1
 
             return result;
         }
+    }
+    
+    public class TextFileHandling
+    {
+        public List<string>? ReadTextFile(string path)
+        {
+            try
+            {
+                StreamReader sr = new StreamReader(path);
+
+                string? line;
+                List<string> text = new List<string>();
+
+                while ((line = sr.ReadLine()) != null)
+                {
+                    text.Add(line);
+                }
+                return text;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+                return null;
+            }
+            finally
+            {
+                Console.WriteLine("Executing finally block.");
+            }
+
+        }
+
+        public void WriteTextFile(string path, List<string> text)
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(path);
+
+                foreach (string line in text)
+                {
+                    sw.WriteLine(line);
+                }
+                sw.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception: " + e.Message);
+            }
+            finally
+            {
+                Console.WriteLine("Executing finally block.");
+            }
+        }
+
+        public string? GetFilePath()
+        {
+            var dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.FileName = "Document";
+            dialog.DefaultExt = ".txt";
+            dialog.Filter = "Text documents (.txt)|*.txt";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                return dialog.FileName;
+            }
+
+            return null;
+        }
+
+        public string? SaveFilePath()
+        {
+            var dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.FileName = "Document";
+            dialog.DefaultExt = ".txt";
+            dialog.Filter = "Text documents (.txt)|*.txt";
+
+            bool? result = dialog.ShowDialog();
+
+            if (result == true)
+            {
+                return dialog.FileName;
+            }
+
+            return null;
+        }
+
     }
 }

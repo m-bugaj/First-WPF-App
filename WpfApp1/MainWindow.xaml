@@ -29,10 +29,10 @@
                 <MenuItem Header="_New"/>
 
 
-                <MenuItem Header="_Load"/>
+                <MenuItem x:Name="LoadItem" Click ="LoadItem_Click" Header="_Load"/>
 
 
-                <MenuItem Header="_Save"/>
+                <MenuItem x:Name="SaveItem" Header="_Save" Click="SaveItem_Click"/>
                 <MenuItem Header="E_xit"/>
             </MenuItem>
             <MenuItem Header="_Help">
@@ -50,7 +50,7 @@
         <Label Content="Range to:" HorizontalAlignment="Left" Margin="540,0,0,0" Grid.Row="1" VerticalAlignment="Center"/>
         <Button x:Name="StartButton" Grid.Column="1" Content="Start" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Height="45" Width="180" Click ="StartButton_Click" />
         <ProgressBar x:Name="ProgrssBarApp" HorizontalAlignment="Center" Height="45" Grid.Row="3" VerticalAlignment="Center" Width="580"/>
-        <StatusBar Grid.Row="4">
+        <StatusBar Grid.Row="3" Grid.ColumnSpan="2" Margin="0,65,0,0" Grid.RowSpan="2">
             <StatusBarItem>
                 <TextBlock x:Name="TxtBlock"/>
             </StatusBarItem>
