@@ -2,37 +2,37 @@
 
 ## Overview
 
-This WPF (Windows Presentation Foundation) application is your go-to random number generator with a user-friendly interface. It features a menu bar, progress bar, and status bar to ensure a delightful user experience.
+This WPF (Windows Presentation Foundation) application is designed as a versatile random number generator, featuring a sophisticated interface with a menu bar, progress bar, and status bar for an enhanced user experience.
 
 ## 🌟 Features
 
-- **User-Friendly Interface**: The application boasts a sleek menu bar, a dynamic progress bar, and an informative status bar for easy navigation.
-- **Random Number Magic**: Leverages a custom class for crafting pseudorandom numbers within a user-defined range.
-- **File Wizardry**: Empowers users to load and save generated numbers with a flick of the wand.
-- **Exit Enchantment**: Displays a confirmation dialog when attempting to close the application—a touch of wizardry.
-- **About Alcove**: Includes an "About" menu item that opens a new window with magical information about the author.
+- **User-Friendly Interface**: The application offers an intuitive menu bar, a dynamic progress bar, and an informative status bar for seamless navigation.
+- **Random Number Generation**: Utilizes a custom class for generating pseudorandom numbers within a user-defined range.
+- **File Handling**: Enables users to load and save generated numbers effortlessly.
+- **Exit Confirmation**: Prompts a confirmation dialog when attempting to close the application for a smooth user experience.
+- **About Section**: Includes an "About" menu item providing information about the author.
 
 ## 💻 Usage
 
-1. Launch the application from your spellbook (or IDE).
-2. Input the desired number of elements, the magical range from, and the enchanted range to.
-3. Click the "Start" button to initiate the spell of random number generation.
-4. Monitor the magic progress in the enchanted progress bar.
-5. Witness magical status messages appearing in the status bar.
+1. Launch the application.
+2. Input the desired number of elements, the minimum range, and the maximum range.
+3. Click the "Start" button to initiate the random number generation process.
+4. Monitor the progress in the provided progress bar.
+5. View status messages in the dedicated status bar.
 
 ## 📜 Menu Structure
 
-- [File] -> [New] - Clears all enchanted elements.
-- [File] -> [Load] - Summons data from a magical text file.
-- [File] -> [Save] - Scribes the generated numbers into a magical text file.
-- [File] -> [Exit] - Closes the magical application.
-- [Help] -> [About] - Unveils enchanting information about the wizardly author.
+- [File] -> [New] - Clears all generated elements.
+- [File] -> [Load] - Loads data from a text file.
+- [File] -> [Save] - Saves the generated numbers to a text file.
+- [File] -> [Exit] - Closes the application with a confirmation prompt.
+- [Help] -> [About] - Displays information about the author.
 
 ## ⚙️ Installation
 
-Clone the repository and open the enchanted project in Visual Studio or your preferred IDE. Cast the build spell and run the application.
+Clone the repository and open the project in Visual Studio or your preferred IDE. Build the solution and run the application.
 
-## 🧙‍♂️ Author
+## 👨‍💻 Author
 
 - **Michał Bugaj**
 
@@ -42,4 +42,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-*Feel free to contribute or provide magical feedback for ongoing enchantments!*
+*Contributions and feedback are welcome for continuous improvement!*
