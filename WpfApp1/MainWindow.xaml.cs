@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
-
+using System.Diagnostics.Eventing.Reader;
 
 namespace WpfApp1
 {
@@ -43,26 +43,32 @@ namespace WpfApp1
                 int.TryParse(textBoxRangeFrom.Text, out int minValue) &&
                 int.TryParse(textBoxRangeTo.Text, out int maxValue))
             {
-                RandomNumberGenerator generator = new RandomNumberGenerator();
-
-                // IProgress<int> progress is used to update progress
-                Progress<int> progress = new Progress<int>(value =>
+                if (minValue <= maxValue)
                 {
-                    TxtBlock.Text = $"Postęp: {value}%";
-                    ProgrssBarApp.Value = value; // ProgressBar progress update
-                });
+                    RandomNumberGenerator generator = new RandomNumberGenerator();
 
-                List<int> generatedNumbers = await generator.GenerateAsync(count, minValue, maxValue, progress);
+                    // IProgress<int> progress is used to update progress
+                    Progress<int> progress = new Progress<int>(value =>
+                    {
+                        TxtBlock.Text = $"Postęp: {value}%";
+                        ProgrssBarApp.Value = value; // ProgressBar progress update
+                    });
 
-                Console.WriteLine("Wygenerowane liczby:");
-                
-                TxtOutputBlock.Text = "Wygenerowane liczby:\n" + string.Join(", ", generatedNumbers);   
-                
+                    List<int> generatedNumbers = await generator.GenerateAsync(count, minValue, maxValue, progress);
+
+                    TxtOutputBlock.Text = "Wygenerowane liczby:\n" + string.Join(", ", generatedNumbers);
+                }
+                else
+                {
+                    MessageBox.Show("Error: \"Range from\" value must be greater than \"Range to\" value.", "Value Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
                 SetStatus("Invalid input. Please enter valid numbers.");
             }
+
+            SetStatus("Ready");
         }
 
         private void LoadItem_Click(object sender, RoutedEventArgs e)
@@ -103,7 +109,7 @@ namespace WpfApp1
                 fileSaved = true;
                 savedFilePath = path;
 
-                MessageBox.Show("Plik został zapisany.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("The file has been saved.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
@@ -113,15 +119,70 @@ namespace WpfApp1
 
                     textFile.WriteTextFile(savedFilePath, text);
 
-                    MessageBox.Show("Plik został nadpisany.", "Informacja", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("The file has been overwritten.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Błąd: Ścieżka do pliku nie została ustawiona.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Error: The path to the file has not been set.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
 
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you want to close application?", "Exit", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                // Exit app
+                Application.Current.Shutdown();
+            }
+        }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow aboutWindow = new AboutWindow();
+
+            // Assigning an owner to AboutWindow
+            aboutWindow.Owner = this;
+
+            aboutWindow.Show();
+        }
+
+        private void SaveAsButton_Click(object sender, RoutedEventArgs e)
+        {
+            TextFileHandling textFile = new TextFileHandling();
+            
+                string? path = textFile.SaveFilePath();
+                if (path == null)
+                {
+                MessageBox.Show("Error: The path to the file has not been set.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+                }
+
+                List<string> text = new List<string>(TxtOutputBlock.Text.Split(Environment.NewLine));
+
+                textFile.WriteTextFile(path, text);
+                fileSaved = true;
+                savedFilePath = path;
+
+            MessageBox.Show("The file has been saved.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        private void NewButton_Click(object sender, RoutedEventArgs e)
+        {
+            TxtOutputBlock.Text = "";
+            textBox.Text = "";
+            textBoxRangeFrom.Text = "";
+            textBoxRangeTo.Text = "";
+            SetStatus("Ready");
+        }
+
+        private void SaveCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveItem_Click(sender, e);//Implementation of save
         }
     }
 
@@ -131,6 +192,7 @@ namespace WpfApp1
 
         public async Task<List<int>> GenerateAsync(int count, int minValue, int maxValue, IProgress<int> progress = null)
         {
+
             List<int> result = new List<int>();
 
             for (int i = 0; i < count; i++)
